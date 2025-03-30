@@ -9,6 +9,13 @@ const facultySchema = new Schema({
   phone: { type: String },
   department: { type: String, required: true },
   designation: { type: String },
+  role: {
+    type: String,
+    enum: ['admin','lecturer'],
+    default: 'lecturer',
+    require: true
+  },
+  password: { type: String, require:true, select: false},
   coursesTeaching: [{ type: Schema.Types.ObjectId, ref: 'Course' }],
   joiningDate: { type: Date, default: Date.now }
 }, { timestamps: true });
