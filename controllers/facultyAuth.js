@@ -1,0 +1,1 @@
+import facultySchema from "../models/Faculty";

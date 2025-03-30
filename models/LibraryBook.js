@@ -12,4 +12,4 @@ const libraryBookSchema = new Schema({
   totalCopies: { type: Number, required: true }
 }, { timestamps: true });
 
-module.exports = mongoose.model('LibraryBook', libraryBookSchema);
+export default libraryBookSchema;

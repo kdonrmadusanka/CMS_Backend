@@ -11,4 +11,4 @@ const feeSchema = new Schema({
   transactionId: { type: String }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Fee', feeSchema);
+export default feeSchema;

@@ -11,4 +11,4 @@ const bookIssueSchema = new Schema({
   fine: { type: Number, default: 0 }
 }, { timestamps: true });
 
-module.exports = mongoose.model('BookIssue', bookIssueSchema);
+export default bookIssueSchema;

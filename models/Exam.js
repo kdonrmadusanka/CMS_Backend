@@ -12,4 +12,4 @@ const examSchema = new Schema({
   passingMarks: { type: Number, required: true }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Exam', examSchema);
+export default examSchema;

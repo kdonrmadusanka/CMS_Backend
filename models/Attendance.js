@@ -9,4 +9,4 @@ const attendanceSchema = new Schema({
   remarks: { type: String }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Attendance', attendanceSchema);
+export default attendanceSchema;
