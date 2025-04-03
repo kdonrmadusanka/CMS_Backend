@@ -13,7 +13,7 @@ const facultySchema = new Schema({
     type: String,
     enum: ['admin','lecturer'],
     default: 'lecturer',
-    require: true
+    required: true
   },
   password: { type: String, require:true, select: false},
   coursesTeaching: [{ type: Schema.Types.ObjectId, ref: 'Course' }],
