@@ -20,4 +20,4 @@ const facultySchema = new Schema({
   joiningDate: { type: Date, default: Date.now }
 }, { timestamps: true });
 
-export default facultySchema;
+export default mongoose.model('Faculty', facultySchema);
