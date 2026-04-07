@@ -17,6 +17,7 @@ app.use(express.json()); // parse JSON request bodies
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Connect to database
 connectDB();
@@ -28,6 +29,19 @@ app.get('/', (req, res) => {
 
 // Create HTTP server (useful if adding Socket.IO later)
 const httpServer = createServer(app);
+
+const io = initIO(httpServer);
+
+io.on('connection', (socket) => {
+  console.log('New client connected:', socket.id);
+
+  // Use the separate handler
+  handleSearchResources(socket);
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected:', socket.id);
+  });
+});
 
 // Start the server
 httpServer.listen(PORT, () => {
