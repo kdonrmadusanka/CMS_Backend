@@ -19,6 +19,7 @@ app.use(express.json()); // parse JSON request bodies
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/events', eventRoutes);
+app.use('/api/resources', resourceRoutes);
 app.use('/api/users', userRoutes);
 
 // Connect to database
@@ -43,6 +44,37 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('Client disconnected:', socket.id);
   });
+});
+
+// Cron job: Release expired resource reservations every minute
+cron.schedule('* * * * *', async () => {
+  try {
+    const now = new Date();
+
+    const expiredResources = await Resource.find({
+      availability: false,
+      reservationExpiry: { $lte: now },
+    });
+
+    for (const resource of expiredResources) {
+      resource.availability = true;
+      resource.reservedBy = null;
+      resource.reservationDate = null;
+      resource.reservationExpiry = null;
+      await resource.save();
+
+      console.log(`Resource ${resource.name} is now available.`);
+
+      const io = getIO();
+      io.emit('resourceUpdated', {
+        resourceId: resource._id,
+        name: resource.name,
+        status: 'available',
+      });
+    }
+  } catch (error) {
+    console.error('Error updating expired reservations:', error);
+  }
 });
 
 // Start the server
