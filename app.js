@@ -18,6 +18,8 @@ app.use(express.json()); // parse JSON request bodies
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/events', eventRoutes);
+app.use('/api/users', userRoutes);
 
 // Connect to database
 connectDB();
